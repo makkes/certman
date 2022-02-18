@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"sigs.k8s.io/yaml"
 
 	"go.e13.dev/certman/pkg/cert"
 	"go.e13.dev/certman/pkg/flags"
@@ -19,15 +20,32 @@ func NewCommand() *cobra.Command {
 		Name:      "privkey-out",
 		Validator: flags.DisallowEmpty{},
 	}
+	cfgFlag := flags.Flag{
+		Name:      "config",
+		Validator: flags.DisallowEmpty{},
+	}
+	var cfg cert.CSRConfig
 
 	cmd := cobra.Command{
 		Use:   "csr",
 		Short: "Create a new certificate signing request (CSR)",
 		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return flags.Validate(csrOutFlag, privkeyOutFlag)
+			if err := flags.Validate(csrOutFlag, privkeyOutFlag, cfgFlag); err != nil {
+				return err
+			}
+
+			cfgData, err := os.ReadFile(cfgFlag.Val)
+			if err != nil {
+				return fmt.Errorf("failed to read configuration file '%s': %w", cfgFlag.Val, err)
+			}
+			if err := yaml.Unmarshal(cfgData, &cfg); err != nil {
+				return fmt.Errorf("failed to parse configuration file '%s': %w", cfgFlag.Val, err)
+			}
+
+			return nil
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			csr, err := cert.CreateCSR()
+			csr, err := cert.CreateCSR(&cfg)
 			if err != nil {
 				return fmt.Errorf("failed to create CA: %w", err)
 			}
@@ -47,6 +65,7 @@ func NewCommand() *cobra.Command {
 	cmd.PersistentFlags().StringVar(&csrOutFlag.Val, csrOutFlag.Name, "", "filename to use for storing the CSR")
 	cmd.PersistentFlags().StringVar(
 		&privkeyOutFlag.Val, privkeyOutFlag.Name, "", "filename to use for storing the private key")
+	cmd.PersistentFlags().StringVar(&cfgFlag.Val, cfgFlag.Name, "", "filename of the input configuration for the CSR")
 
 	return &cmd
 }
