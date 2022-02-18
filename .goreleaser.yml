@@ -31,6 +31,7 @@ builds:
       - -w
       - -X 'go.e13.dev/certman/pkg/config.major={{ .Major }}'
       - -X 'go.e13.dev/certman/pkg/config.minor={{ .Minor }}'
+      - -X 'go.e13.dev/certman/pkg/config.patch={{ .Patch }}'
       - -X 'go.e13.dev/certman/pkg/config.gitVersion=v{{ trimprefix .Version "v" }}'
       - -X 'go.e13.dev/certman/pkg/config.gitCommit={{ .FullCommit }}'
       - -X 'go.e13.dev/certman/pkg/config.gitTreeState={{ .Env.GIT_TREE_STATE }}'
