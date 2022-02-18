@@ -1,8 +1,8 @@
 package flags
 
-func Validate(flags ...Flag) error {
-	for _, flag := range flags {
-		if err := flag.Validate(); err != nil {
+func Validate(validators ...Validatable) error {
+	for _, validator := range validators {
+		if err := validator.Validate(); err != nil {
 			return err
 		}
 	}
