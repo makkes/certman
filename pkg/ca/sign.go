@@ -43,6 +43,7 @@ func CreateCertificate(csrPEM, caPEM, caKeyPEM []byte) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate serial number: %w", err)
 	}
+
 	cert := x509.Certificate{
 		SerialNumber: ser,
 		Issuer:       caCert.Subject,

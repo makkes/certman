@@ -47,7 +47,7 @@ func NewCommand() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			csr, err := cert.CreateCSR(&cfg)
 			if err != nil {
-				return fmt.Errorf("failed to create CA: %w", err)
+				return fmt.Errorf("failed to create CSR: %w", err)
 			}
 
 			err = os.WriteFile(csrOutFlag.Val, csr.Request, 0o644) //nolint:gosec // doesn't contain sensitive data
