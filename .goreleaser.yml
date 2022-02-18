@@ -29,12 +29,12 @@ builds:
     ldflags:
       - -s
       - -w
-      - -X 'go.e13.dev/pkg/config/version.major={{ .Major }}'
-      - -X 'go.e13.dev/pkg/config/version.minor={{ .Minor }}'
-      - -X 'go.e13.dev/pkg/config/version.gitVersion=v{{ trimprefix .Version "v" }}'
-      - -X 'go.e13.dev/pkg/config/version.gitCommit={{ .FullCommit }}'
-      - -X 'go.e13.dev/pkg/config/version.gitTreeState={{ .Env.GIT_TREE_STATE }}'
-      - -X 'go.e13.dev/pkg/config/version.buildDate={{ .CommitDate }}'
+      - -X 'go.e13.dev/certman/pkg/config.major={{ .Major }}'
+      - -X 'go.e13.dev/certman/pkg/config.minor={{ .Minor }}'
+      - -X 'go.e13.dev/certman/pkg/config.gitVersion=v{{ trimprefix .Version "v" }}'
+      - -X 'go.e13.dev/certman/pkg/config.gitCommit={{ .FullCommit }}'
+      - -X 'go.e13.dev/certman/pkg/config.gitTreeState={{ .Env.GIT_TREE_STATE }}'
+      - -X 'go.e13.dev/certman/pkg/config.buildDate={{ .CommitDate }}'
     goos:
       - linux
       - windows
