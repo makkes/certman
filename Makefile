@@ -7,14 +7,16 @@ lint:
 test:
 	go test ./...
 
-.PHONY: clean
-clean:
-	rm -rf ./$(BUILD_DIR)
-
 GORELEASER_PARALLELISM ?= $(shell nproc --ignore=1)
 GORELEASER_DEBUG ?= false
 
 export GORELEASER_CURRENT_TAG=$(GIT_TAG)
+
+ifneq ($(shell git status --porcelain 2>/dev/null; echo $$?), 0)
+	export GIT_TREE_STATE := dirty
+else
+	export GIT_TREE_STATE :=
+endif
 
 .PHONY: build-snapshot
 build-snapshot: ## Builds a snapshot with goreleaser

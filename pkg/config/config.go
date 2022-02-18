@@ -1,6 +1,7 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
 	"runtime"
 )
@@ -25,6 +26,11 @@ type Version struct {
 	GoVersion    string `json:"goVersion"`
 	Compiler     string `json:"compiler"`
 	Platform     string `json:"platform"`
+}
+
+func (v Version) String() string { //nolint:gocritic // we really don't want to use a pointer here
+	res, _ := json.Marshal(v)
+	return string(res)
 }
 
 // GetVersion returns this binary's version.
