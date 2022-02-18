@@ -9,6 +9,7 @@ import (
 var (
 	major        = "0"
 	minor        = "0"
+	patch        = "0"
 	gitVersion   = "v0.0.0-dev"
 	gitCommit    = ""
 	gitTreeState = ""
@@ -19,6 +20,7 @@ var (
 type Version struct {
 	Major        string `json:"major"`
 	Minor        string `json:"minor"`
+	Patch        string `json:"patch"`
 	GitVersion   string `json:"gitVersion"`
 	GitCommit    string `json:"gitCommit"`
 	GitTreeState string `json:"gitTreeState"`
@@ -38,6 +40,7 @@ func GetVersion() Version {
 	return Version{
 		Major:        major,
 		Minor:        minor,
+		Patch:        patch,
 		GitVersion:   gitVersion,
 		GitCommit:    gitCommit,
 		GitTreeState: gitTreeState,
