@@ -18,6 +18,8 @@ junit-report*.xml
 
 # Output of GoReleaser
 dist/
+# single-target binary
+/certman
 
 # Visual Studio Code files
 .vscode/*
