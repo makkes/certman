@@ -49,6 +49,12 @@ func CreateCertificate(csrPEM, caPEM, caKeyPEM []byte) ([]byte, error) {
 		Subject:      csr.Subject,
 		NotBefore:    time.Now(),
 		NotAfter:     time.Now().AddDate(0, 0, 90),
+		KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageDataEncipherment | x509.KeyUsageKeyEncipherment,
+		ExtKeyUsage: []x509.ExtKeyUsage{
+			x509.ExtKeyUsageServerAuth,
+		},
+		IsCA:     false,
+		DNSNames: []string{csr.Subject.CommonName},
 	}
 
 	signedCert, err := x509.CreateCertificate(rand.Reader, &cert, caCert, csr.PublicKey, caPrivKey)

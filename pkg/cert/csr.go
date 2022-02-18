@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/x509"
+	"crypto/x509/pkix"
 	"encoding/pem"
 	"fmt"
 )
@@ -14,13 +15,21 @@ type CSR struct {
 	Request    []byte
 }
 
-func CreateCSR() (CSR, error) {
+func CreateCSR(cfg *CSRConfig) (CSR, error) {
 	privKey, err := rsa.GenerateKey(rand.Reader, 4096)
 	if err != nil {
 		return CSR{}, err
 	}
 
-	reqTmpl := x509.CertificateRequest{}
+	reqTmpl := x509.CertificateRequest{
+		Subject: pkix.Name{
+			CommonName:   cfg.CommonName,
+			Organization: []string{cfg.Organization},
+			Country:      []string{cfg.Country},
+			Province:     []string{cfg.Province},
+			Locality:     []string{cfg.Locality},
+		},
+	}
 	req, err := x509.CreateCertificateRequest(rand.Reader, &reqTmpl, privKey)
 	if err != nil {
 		return CSR{}, fmt.Errorf("failed to create certificate request: %w", err)
