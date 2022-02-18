@@ -51,20 +51,23 @@ func (e exclusive) Validate() error {
 	for _, f := range e.flags {
 		if f.Val != "" {
 			if hasNonEmpty {
-				return e.error()
+				return e.error("only ")
 			}
 			hasNonEmpty = true
 		}
 	}
+	if !hasNonEmpty {
+		return e.error("")
+	}
 	return nil
 }
 
-func (e exclusive) error() error {
+func (e exclusive) error(prefix string) error {
 	names := make([]string, len(e.flags))
 	for idx, f := range e.flags {
 		names[idx] = "--" + f.Name
 	}
-	return fmt.Errorf("only one of %s must be set", strings.Join(names, ", "))
+	return fmt.Errorf("%sone of %s must be set", prefix, strings.Join(names, ", "))
 }
 
 type and struct {
@@ -76,9 +79,19 @@ func And(flags ...Flag) and {
 }
 
 func (a and) Validate() error {
+	hasNonEmpty := false
+	hasEmpty := false
 	for _, f := range a.flags {
 		if f.Val == "" {
-			return a.error()
+			hasEmpty = true
+			if hasNonEmpty {
+				return a.error()
+			}
+		} else {
+			hasNonEmpty = true
+			if hasEmpty {
+				return a.error()
+			}
 		}
 	}
 	return nil
