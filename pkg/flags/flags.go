@@ -7,6 +7,7 @@ import (
 
 type Flag struct {
 	Name      string
+	Shorthand string
 	Val       string
 	Validator Validator
 }
@@ -36,6 +37,25 @@ func (v DisallowEmpty) Validate(val string) error {
 		return fmt.Errorf("value cannot be empty")
 	}
 	return nil
+}
+
+type allowSet struct {
+	allowed []string
+}
+
+func (v allowSet) Validate(val string) error {
+	for _, a := range v.allowed {
+		if val == a {
+			return nil
+		}
+	}
+	return fmt.Errorf("'%s' is not a valid value. Use one of [%s]", val, strings.Join(v.allowed, ", "))
+}
+
+func AllowSet(allowed ...string) allowSet {
+	return allowSet{
+		allowed: allowed,
+	}
 }
 
 type exclusive struct {
