@@ -2,6 +2,14 @@
 
 certman is an opinionated tool for managing TLS certificates. It creates certificate authorities (CAs) and certificates signed by these CAs. All just with a handful of simple CLI commands.
 
+## Installing
+
+Either grab one of the [released versions](https://github.com/makkes/certman/releases) or install certman using Go's `install` command:
+
+```sh
+go install go.e13.dev/certman@v0.2.0
+```
+
 ## Creating a CA
 
 ```sh
