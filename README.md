@@ -7,7 +7,7 @@ certman is an opinionated tool for managing TLS certificates. It creates certifi
 Either grab one of the [released versions](https://github.com/makkes/certman/releases) or install certman using Go's `install` command:
 
 ```sh
-go install go.e13.dev/certman@v0.2.0
+go install go.e13.dev/certman@v0.3.0
 ```
 
 ## Creating a CA
@@ -16,7 +16,7 @@ go install go.e13.dev/certman@v0.2.0
 certman create ca --cert-out ca.pem --key-out ca.key --config ca.yaml
 ```
 
-This commands stores the CA certificate in `ca.pem` and its private key in `ca.key`. The values of the certificate are derived from the configuration given in `ca.yaml` which looks similar to this example:
+This command stores the CA certificate in `ca.pem` and its private key in `ca.key`. The values of the certificate are derived from the configuration given in `ca.yaml` which looks similar to this example:
 
 ```yaml
 apiVersion: v1
@@ -52,11 +52,11 @@ The certificate has the following properties:
 
 - Valid for 90 days
 - Valid for "TLS Web Server Authentication" (this is the only x509 extended key usage)
-- The subject alternative name (SAN) is set to the same value as the common name in the cnofiguration file.
+- The subject alternative name (SAN) is set to the same value as the common name in the configuration file.
 
 ## Creating a certificate signing request (CSR)
 
-The section above skips ove the CSR creation by implicitly creating a CSR and directly creating a certificate from it. If you'd like to create a CSR for submission to an external CA you do so by running the following command:
+The section above skips over the CSR creation by implicitly creating a CSR and directly creating a certificate from it. If you'd like to create a CSR for submission to an external CA you do so by running the following command:
 
 ```sh
 certman create csr --out test.csr --privkey-out test.key --config test.yaml
