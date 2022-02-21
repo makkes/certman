@@ -53,3 +53,13 @@ The certificate has the following properties:
 - Valid for 90 days
 - Valid for "TLS Web Server Authentication" (this is the only x509 extended key usage)
 - The subject alternative name (SAN) is set to the same value as the common name in the cnofiguration file.
+
+## Creating a certificate signing request (CSR)
+
+The section above skips ove the CSR creation by implicitly creating a CSR and directly creating a certificate from it. If you'd like to create a CSR for submission to an external CA you do so by running the following command:
+
+```sh
+certman create csr --out test.csr --privkey-out test.key --config test.yaml
+```
+
+The `test.yaml` is the same as the one in the example above. The command will create a public/private key pair and sign the CSR using the private key.
