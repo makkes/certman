@@ -3,6 +3,7 @@
 .PHONY: lint
 lint:
 	golangci-lint run
+
 .PHONY: test
 test:
 	go test ./...
@@ -49,5 +50,5 @@ release-snapshot:
 
 .PHONY: mod-tidy
 mod-tidy: ## Run go mod tidy
-	go mod tidy -v -compat=1.17
+	go mod tidy
 	go mod verify

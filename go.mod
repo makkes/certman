@@ -1,6 +1,6 @@
 module go.e13.dev/certman
 
-go 1.17
+go 1.18
 
 require (
 	github.com/spf13/cobra v1.5.0
