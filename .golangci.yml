@@ -1,12 +1,12 @@
 run:
-  timeout: 2m
+  timeout: 5m
+  go: '1.20'
 
 linters:
   disable-all: true
   enable:
     - containedctx
     - contextcheck
-    - deadcode
     - depguard
     - errcheck
     - errchkjson
@@ -27,7 +27,6 @@ linters:
     - nolintlint
     - prealloc
     - staticcheck
-    - structcheck
     - stylecheck
     - tenv
     - thelper
@@ -36,7 +35,6 @@ linters:
     - unconvert
     - unparam
     - unused
-    - varcheck
     - whitespace
 
 linters-settings:
@@ -54,7 +52,29 @@ linters-settings:
     check-error-free-encoding: true
   gci:
     local-prefixes: go.e13.dev/certman
+    sections:
+      - Standard
+      - Default
   gocritic:
+    disabled-checks:
+      - appendAssign
+      - appendCombine
+      - commentedOutCode
+      - equalFold
+      - exposedSyncMutex
+      - httpNoBody
+      - hugeParam
+      - ifElseChain
+      - importShadow
+      - methodExprCall
+      - nestingReduce
+      - preferStringWriter
+      - rangeValCopy
+      - singleCaseSwitch
+      - stringConcatSimplify
+      - unlabelStmt
+      - unnamedResult
+      - whyNoLint
     enabled-tags:
       - diagnostic
       - experimental
@@ -62,10 +82,10 @@ linters-settings:
       - performance
       - style
   gofumpt:
-    lang-version: "1.18"
+    lang-version: "1.20"
     extra-rules: true
   lll:
-    line-length: 120
+    line-length: 150
 
 issues:
   exclude-rules:

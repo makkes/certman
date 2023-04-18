@@ -30,7 +30,7 @@ type Version struct {
 	Platform     string `json:"platform"`
 }
 
-func (v Version) String() string { //nolint:gocritic // we really don't want to use a pointer here
+func (v Version) String() string {
 	res, _ := json.Marshal(v)
 	return string(res)
 }
